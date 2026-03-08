@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeucoScan | Leukemia Detection AI Dashboard</title>
+    <meta name="description" content="Advanced AI-powered leukemia detection with Grad-CAM visualization and automated analysis.">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="app-container">
+        <header>
+            <h1><i class="fas fa-microscope"></i> LeucoScan AI</h1>
+            <p>Advanced Leukemia Cell Analysis & Visualization</p>
+        </header>
+
+        <main class="dashboard-grid">
+            <!-- Upload Section -->
+            <section class="card">
+                <h2><i class="fas fa-cloud-upload-alt"></i> Upload Sample</h2>
+                <div id="drop-zone" class="upload-container">
+                    <div class="upload-icon">
+                        <i class="fas fa-file-image"></i>
+                    </div>
+                    <p>Drag & Drop peripheral blood smear image</p>
+                    <p><small>Supports: JPG, PNG, TIFF</small></p>
+                    <input type="file" id="file-input" hidden accept="image/*">
+                    <button class="btn btn-primary" onclick="document.getElementById('file-input').click()">Browse Files</button>
+                    <img id="image-preview" alt="Preview">
+                </div>
+                <div id="upload-status" style="margin-top: 1rem; display: none;">
+                    <i class="fas fa-sync fa-spin"></i> Processing biopsy sample...
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="card">
+                <h2><i class="fas fa-chart-pie"></i> Diagnostic Analysis</h2>
+                <div id="results-placeholder" style="text-align: center; color: #999; padding: 3rem;">
+                    <i class="fas fa-stethoscope" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                    <p>Results will appear here after analysis</p>
+                </div>
+                
+                <div id="results-area" class="results-content" style="display: none;">
+                    <div class="prediction-box">
+                        <h3 id="prediction-label">Prediction: -</h3>
+                        <p id="confidence-score">Confidence: -</p>
+                    </div>
+                    
+                    <div class="heatmap-container">
+                        <h3><i class="fas fa-fire"></i> Grad-CAM Heatmap Analysis</h3>
+                        <p><small>The heatmap highlights regions of interest used for prediction.</small></p>
+                        <img id="heatmap-img" src="" alt="Grad-CAM Heatmap">
+                    </div>
+
+                    <div class="actions">
+                        <button class="btn btn-primary"><i class="fas fa-download"></i> Export Report</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Chatbot Window -->
+    <div id="chatbot-toggle" class="chatbot-toggle">
+        <i class="fas fa-comment-medical"></i>
+    </div>
+
+    <div id="chat-window" class="chat-window">
+        <div class="chat-header">
+            <span><i class="fas fa-robot"></i> LeucoAssistant</span>
+            <i class="fas fa-times" id="close-chat" style="cursor: pointer;"></i>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="message bot">
+                Hello! I'm your leukemia analysis assistant. How can I help you understand the results?
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chat-input-field" placeholder="Ask about the diagnosis...">
+            <button id="send-chat"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
