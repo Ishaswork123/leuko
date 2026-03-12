@@ -11,19 +11,15 @@ import time
 # --- Initialize Environment Variables ---
 load_dotenv()
 
-# --- Force CPU Mode ---
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
-
 # --- App Instance Configuration ---
 app = Flask(__name__)
 CORS(app)
 
 # --- File Paths ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
-STATIC_IMAGES = os.path.join(BASE_DIR, "static", "images")
-MODEL_PATH = os.path.join(BASE_DIR, "fine_tuned_densenet_leukemia.h5")
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
+STATIC_IMAGES = os.path.join(BASE_DIR, 'static', 'images')
+MODEL_PATH = os.path.join(UPLOAD_FOLDER, 'fine_tuned_densenet_leukemia (1).h5')
 
 # Create uploads folder if it doesn't exist
 if not os.path.exists(UPLOAD_FOLDER):
@@ -125,7 +121,7 @@ def predict():
     if file.filename == '':
         return jsonify({'error': 'No file selected for uploading'}), 400
 
-    tmp_path = "/tmp/scan.jpg" if os.path.exists("/tmp") else os.path.join(UPLOAD_FOLDER, "scan.jpg")
+    tmp_path = os.path.join('/tmp', f"scan_{int(time.time())}.jpg") if os.path.exists('/tmp') else os.path.join(UPLOAD_FOLDER, "current_scan.jpg")
     file.save(tmp_path)
 
     try:
@@ -178,6 +174,6 @@ def status():
         'groq_active': groq_client is not None
     })
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     get_model()
-    app.run(host="0.0.0.0", port=10000)
+    app.run(debug=True, port=5000)
