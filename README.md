@@ -22,4 +22,28 @@ Frontend: HTML5, CSS3, and JavaScript.
 
 AI/ML: TensorFlow/Keras and Groq Cloud API.
 
-Deployment: Vercel (Cloud platform).
+## 5. Running Locally
+
+To run this project on your local machine:
+
+1.  **Install Dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+2.  **Environment Variables:**
+    Create a `.env` file in the root directory and add your Groq API key:
+    ```env
+    GROQ_API_KEY=your_api_key_here
+    ```
+
+3.  **Start the Server:**
+    Run the `run_local.py` script from the root directory:
+    ```bash
+    python run_local.py
+    ```
+    The application will be available at `http://127.0.0.1:5000`.
+
+## 6. Deployment
+
+This project is configured for deployment on Vercel. The `api/index.py` handles the serverless function logic, and `vercel.json` defines the routes and runtimes.

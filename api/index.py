@@ -12,14 +12,20 @@ import time
 load_dotenv()
 
 # --- App Instance Configuration ---
-app = Flask(__name__)
+# Determine directories
+API_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.abspath(os.path.join(API_DIR, '..'))
+
+app = Flask(__name__, 
+            template_folder=os.path.join(PROJECT_ROOT, 'templates'),
+            static_folder=os.path.join(PROJECT_ROOT, 'static'))
 CORS(app)
 
 # --- File Paths ---
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
-STATIC_IMAGES = os.path.join(BASE_DIR, 'static', 'images')
-MODEL_PATH = os.path.join(UPLOAD_FOLDER, 'fine_tuned_densenet_leukemia (1).h5')
+UPLOAD_FOLDER = os.path.join(PROJECT_ROOT, 'uploads')
+STATIC_IMAGES = os.path.join(PROJECT_ROOT, 'static', 'images')
+# The model is located in the api directory
+MODEL_PATH = os.path.join(API_DIR, 'fine_tuned_densenet_leukemia (1).h5')
 
 # Create uploads folder if it doesn't exist
 if not os.path.exists(UPLOAD_FOLDER):
